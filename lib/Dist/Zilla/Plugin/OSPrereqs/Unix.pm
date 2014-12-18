@@ -14,9 +14,17 @@ extends 'Dist::Zilla::Plugin::OSPrereqs';
 
 use namespace::autoclean;
 
-sub BUILDARGS {
-    my ($class, @arg) = @_;
-    $self->SUPER::BUILDARGS(@arg, _prereq=>"~(linux|bsd)");
+sub BUILD {
+    my $self = shift;
+
+    my @os;
+    {
+        use experimental 'smartmatch';
+        @os = sort(map {$_->[0]} grep {"unix"~~@{$_->[1]}}
+                       @$Perl::osnames::data);
+    }
+
+    $self->{prereq_os} = '~^('.join('|', map {quotemeta} @os).')$';
 }
 
 __PACKAGE__->meta->make_immutable;
