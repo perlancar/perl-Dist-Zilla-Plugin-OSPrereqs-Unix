@@ -1,4 +1,4 @@
-package Dist::Zilla::Plugin::OSPrereqs::Unix;
+package Dist::Zilla::Plugin::OSPrereqs::NonUnix;
 
 # DATE
 # VERSION
@@ -20,7 +20,7 @@ sub BUILD {
     my @os;
     {
         use experimental 'smartmatch';
-        @os = sort(map {$_->[0]} grep {"unix"~~@{$_->[1]}}
+        @os = sort(map {$_->[0]} grep {!("unix"~~@{$_->[1]})}
                        @$Perl::osnames::data);
     }
 
@@ -29,7 +29,7 @@ sub BUILD {
 
 __PACKAGE__->meta->make_immutable;
 1;
-# ABSTRACT: List prereqs for Unix OSes
+# ABSTRACT: List prereqs for non-Unix OSes
 
 =for Pod::Coverage .+
 
@@ -37,8 +37,8 @@ __PACKAGE__->meta->make_immutable;
 
 In dist.ini:
 
- [OSPrereqs::Unix]
- Some::Module::That::Runs::On::Unix=0
+ [OSPrereqs::NonUnix]
+ Some::Module::That::Doesnt::Run::On::Unix=0
  Another::Module=1.23
 
 
@@ -47,10 +47,10 @@ In dist.ini:
 This module is a subclass of L<Dist::Zilla::Plugin::OSPrereqs>. It is a shortcut
 for doing:
 
- [OSPrereqs / ~^(linux|freebsd|darwin|...)$]
+ [OSPrereqs / ~^(MacOS|MSWin32|...)$]
  ...
 
-The list of Unix operating systems is retrieved from L<Perl::osnames>.
+The list of non-Unix operating systems is retrieved from L<Perl::osnames>.
 
 
 =head1 SEE ALSO
