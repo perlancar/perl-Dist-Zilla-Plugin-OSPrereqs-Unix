@@ -38,6 +38,8 @@ __PACKAGE__->meta->make_immutable;
 In dist.ini:
 
  [OSPrereqs::Unix]
+ Some::Module::That::Runs::On::Unix=0
+ Another::Module=1.23
 
 
 =head1 DESCRIPTION
@@ -46,6 +48,7 @@ This module is a subclass of L<Dist::Zilla::Plugin::OSPrereqs>. It is a shortcut
 for doing:
 
  [OSPrereqs / ~^(linux|freebsd|darwin|...)$]
+ ...
 
 The list of Unix operating systems is retrieved from L<Perl::osnames>.
 
